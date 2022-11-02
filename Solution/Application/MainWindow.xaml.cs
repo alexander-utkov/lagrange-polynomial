@@ -38,7 +38,7 @@ namespace NumericalMethods
         }
 
         /// <summary>
-        /// Упрощает формулу <see cref="input"/> и обновляет ее отображение в <see cref="formula"/>.
+        /// Упрощает формулу в <see cref="input"/>, а также обновляет ее отображение в <see cref="formula"/>.
         /// </summary>
         /// <param name="sender">Отправитель события.</param>
         /// <param name="e">Данные события.</param>
@@ -46,7 +46,34 @@ namespace NumericalMethods
         {
             try
             {
-                formula.Formula = input.Text.Simplify().Latexise();
+                var expression = input.Text.Simplify();
+                formula.Formula = expression.Latexise();
+                input.Text = expression.ToString();
+            }
+            catch
+            {
+                formula.Formula = "\\color{red}{Whoops!}";
+            }
+        }
+
+        /// <summary>
+        /// Записывает в <see cref="input"/> ее производную, а также отображает ее в <see cref="formula"/>.
+        /// 
+        /// Проблемы
+        /// ========
+        /// FIXME: Необходимы временные ограничения на выполнение операции, а также асинхронное выполнение.
+        /// 
+        /// Нахождение производной третьего порядка функции `x^2 + ln(cos(x) + 3) + 4x` занимает очень много времени.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void derivative_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var expression = input.Text.Differentiate("x");
+                formula.Formula = expression.Latexise();
+                input.Text = expression.ToString();
             }
             catch
             {

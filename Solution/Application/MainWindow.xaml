@@ -17,24 +17,38 @@
       <ColumnDefinition Width="12px" />
       <ColumnDefinition Width="20*" />
     </Grid.ColumnDefinitions>
-
     <controls:FormulaControl x:Name="formula"
                              Grid.Row="0"
-                             Grid.Column="0"
-                             Grid.ColumnSpan="3"/>
+                             Grid.Column="0"/>
     <TextBox x:Name="input"
              Grid.Row="1"
              Grid.Column="0"
+             FontSize="16px"
              VerticalAlignment="Stretch"
              VerticalContentAlignment="Center"
              ToolTip="{StaticResource ResourceKey=input_tooltip}"
              TextChanged="input_TextChanged"/>
-    <Button x:Name="simplify"
-            Grid.Row="1"
-            Grid.Column="2"
-            VerticalAlignment="Stretch"
-            HorizontalAlignment="Stretch"
-            Content="упростить"
-            Click="simplify_Click"/>
+    <StackPanel Orientation="Vertical"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="2">
+      <StackPanel.Resources>
+        <Style TargetType="{x:Type Button}">
+          <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+      </StackPanel.Resources>
+      <Button x:Name="simplify"
+              VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              FontSize="16px"
+              Content="упростить"
+              Click="simplify_Click"/>
+      <Button x:Name="derivative"
+              VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              FontSize="16px"
+              Content="производная"
+              Click="derivative_Click"/>
+    </StackPanel>
   </Grid>
 </Window>
