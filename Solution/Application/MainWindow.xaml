@@ -49,6 +49,18 @@
               FontSize="16px"
               Content="производная"
               Click="derivative_Click"/>
+      <Button x:Name="calculate"
+              VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              FontSize="16px"
+              Content="f(x)"
+              Click="calculate_Click"/>
+        <TextBox x:Name="vars"
+                 FontSize="16px"
+                 Margin="0,0,0,6"
+                 Text="x=2"
+                 ToolTip="{StaticResource ResourceKey=vars_tooltip}"
+                 TextChanged="vars_TextChanged"/>
     </StackPanel>
   </Grid>
 </Window>
