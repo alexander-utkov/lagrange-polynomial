@@ -1,0 +1,14 @@
+root = true
+
+[*]
+indent_style = space
+
+[*.cs]
+guidelines_style = 2px dotted 408ad7db
+guidelines = 120
+
+[**.{xaml,config,resx,settings,xml}]
+indent_style = space
+indent_size = 2
+charset = utf-8
+trim_trailing_whitespace = true

@@ -1,0 +1,9 @@
+# Временные файлы Visual Studio
+.vs/
+
+# Артефакты сборки
+bin/
+obj/
+
+# Пакеты NuGet
+Packages
