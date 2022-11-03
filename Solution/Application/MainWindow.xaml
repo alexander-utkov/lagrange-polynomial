@@ -7,6 +7,11 @@
         xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         xmlns:local="clr-namespace:NumericalMethods"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-  <Grid Margin="12" />
+        Title="Интерполяционный многочлен Лагранжа" Height="450" Width="800">
+  <Grid Margin="12">
+    <controls:FormulaControl x:Name="solution"/>
+    <Button x:Name="interpolate"
+            Content="{StaticResource ResourceKey=interpolate_content}"
+            Click="interpolate_Click"/>
+  </Grid>
 </Window>
