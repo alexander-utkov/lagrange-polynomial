@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         xmlns:local="clr-namespace:NumericalMethods"
         mc:Ignorable="d"
@@ -10,7 +11,8 @@
   <Grid Margin="12">
     <Grid.RowDefinitions>
       <RowDefinition />
-      <RowDefinition Height="24px" />
+      <RowDefinition />
+      <RowDefinition Height="32px" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="80*" />
@@ -20,17 +22,21 @@
     <controls:FormulaControl x:Name="formula"
                              Grid.Row="0"
                              Grid.Column="0"/>
-    <TextBox x:Name="input"
+    <WpfPlot x:Name="plot"
              Grid.Row="1"
+             Grid.Column="0"/>
+    <TextBox x:Name="input"
+             Grid.Row="2"
              Grid.Column="0"
              FontSize="16px"
              VerticalAlignment="Stretch"
              VerticalContentAlignment="Center"
              ToolTip="{StaticResource ResourceKey=input_tooltip}"
              TextChanged="input_TextChanged"/>
+
     <StackPanel Orientation="Vertical"
                 Grid.Row="0"
-                Grid.RowSpan="2"
+                Grid.RowSpan="3"
                 Grid.Column="2">
       <StackPanel.Resources>
         <Style TargetType="{x:Type Button}">
@@ -55,12 +61,23 @@
               FontSize="16px"
               Content="f(x)"
               Click="calculate_Click"/>
-        <TextBox x:Name="vars"
+      <TextBox x:Name="vars"
                  FontSize="16px"
                  Margin="0,0,0,6"
                  Text="x=2"
                  ToolTip="{StaticResource ResourceKey=vars_tooltip}"
                  TextChanged="vars_TextChanged"/>
+      <Button x:Name="chart"
+              VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              FontSize="16px"
+              Content="график"
+              Click="chart_Click"/>
+      <TextBox x:Name="range"
+                 FontSize="16px"
+                 Margin="0,0,0,6"
+                 Text="-5;5;0.1"
+                 ToolTip="{StaticResource ResourceKey=range_tooltip}"/>
     </StackPanel>
   </Grid>
 </Window>

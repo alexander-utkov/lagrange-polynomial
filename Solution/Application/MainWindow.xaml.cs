@@ -1,9 +1,11 @@
 ﻿using AngouriMath;
 using AngouriMath.Extensions;
+using ScottPlot;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
 using static AngouriMath.Entity;
 
 namespace NumericalMethods
@@ -134,6 +136,38 @@ namespace NumericalMethods
                 formula.Formula = common + ";\\\\" + numerical + "=" + result.Latexise();
 
                 // NOTE: Новая линия в LaTeX - две обратные косые черты.
+            }
+            catch
+            {
+                formula.Formula = "\\color{red}{Whoops!}";
+            }
+        }
+
+        /// <summary>
+        /// Строит график <see cref="input"/> в <see cref="plot"/> в области определения <see cref="range"/>.
+        /// </summary>
+        private void chart_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var expression = MathS.FromString(input.Text);
+
+                var data_x = new List<double>();
+                var data_y = new List<double>();
+
+                var data = range.Text.Replace(".", ",").Split(';'); // FIXME
+                double from = double.Parse(data[0].Trim());
+                double to = double.Parse(data[1].Trim());
+                double step = double.Parse(data[2].Trim());
+                for (double x = from; x <= to; x += step)
+                {
+                    data_x.Add(x);
+                    data_y.Add((double)expression.Substitute("x", x).EvalNumerical()); // FIXME: Throws on NaN.
+                }
+
+                plot.Plot.Clear();
+                plot.Plot.AddScatter(data_x.ToArray(), data_y.ToArray());
+                plot.Refresh();
             }
             catch
             {

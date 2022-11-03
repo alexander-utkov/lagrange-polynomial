@@ -3,4 +3,5 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
   <system:String x:Key="input_tooltip">поддерживаются функции (cos, ..), константы (pi, ..) и переменные (x, ..); степени (x2, x^2) и индексы (x_2)</system:String>
   <system:String x:Key="vars_tooltip">x=1,y=2,z=3,..</system:String>
+  <system:String x:Key="range_tooltip">a;b;step</system:String>
 </ResourceDictionary>
