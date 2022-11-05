@@ -1,0 +1,34 @@
+<Page x:Class="NumericalMethods.Pages.WalkthroughPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:hc="https://handyorg.github.io/handycontrol"
+      xmlns:local="clr-namespace:NumericalMethods.Pages"
+      xmlns:latex="clr-namespace:WpfMath.Controls;assembly=WpfMath"
+      mc:Ignorable="d" 
+      d:DesignWidth="{StaticResource ResourceKey=window_width}"
+      d:DesignHeight="{StaticResource ResourceKey=window_height}">
+  <Page.Resources>
+    <ResourceDictionary Source="../Assets/WalkthroughPageDictionary.xaml" />
+  </Page.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="32"/>
+      <ColumnDefinition Width="12"/>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="12"/>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="12"/>
+      <ColumnDefinition Width="32"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="32"/>
+      <RowDefinition Height="12"/>
+      <RowDefinition/>
+      <RowDefinition Height="12"/>
+      <RowDefinition Height="32"/>
+    </Grid.RowDefinitions>
+    <!-- panel with stack panel -->
+  </Grid>
+</Page>

@@ -1,26 +1,29 @@
-﻿namespace NumericalMethods.Core
+﻿using AngouriMath;
+using Antlr4.Runtime.Misc;
+using System;
+using System.Collections.Generic;
+
+namespace NumericalMethods.Core
 {
     /// <summary>Интерфейс интерполяции многочленами.</summary>
     public interface IInterpolator
     {
+        IReadOnlyCollection<double> DataX { get; }
+        IReadOnlyCollection<double> DataY { get; }
+
         /// <summary>
         /// Получает многочлен, который решает задачу интерполяции в заданных моделью условиях.
         /// </summary>
-        string Polynom { get; }
+        Entity Polynomial { get; }
 
         /// <summary>
-        /// Получает последовательность действий для нахождения многочлена <see cref="Polynom"/> в формате LaTeX.
+        /// Возвращает ординату <see cref="Polynom"/> для входной абсциссы.
         /// </summary>
-        string Solution { get; }
+        Func<double, double> Interpolate { get; }
 
         /// <summary>
-        /// Получает или задает информацию об графике <see cref="Polynom"/>.
+        /// Получает последовательность действий для нахождения многочлена <see cref="Polynom"/>.
         /// </summary>
-        PlotInfo Plot { get; set; }
-
-        /// <summary>Вычисляет значение многочлена.</summary>
-        /// <param name="x">Аргумент <see cref="Polynom"/>.</param>
-        /// <returns>значение многочлена <see cref="Polynom"/> в точке <paramref name="x"/>.</returns>
-        double GetValue(double x);
+        IList<ActionCollection> Solution { get; }
     }
 }

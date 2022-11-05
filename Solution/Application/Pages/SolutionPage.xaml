@@ -26,13 +26,22 @@
     <WpfPlot x:Name="plot"
              Grid.Column="0"
              Grid.Row="0"/>
+    <Button x:Name="define_plot"
+            Grid.Column="0"
+            Grid.Row="2"
+            Height="32px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Click="define_plot_Click"
+            Content="{StaticResource ResourceKey=plot_content}"/>
     <StackPanel Grid.Column="2"
                 Grid.Row="0">
-      <latex:FormulaControl x:Name="polynom"/>
+      <latex:FormulaControl x:Name="polynomial"/>
       <Button x:Name="details"
-            Margin="0,12,0,12"
-            Cursor="Hand"
-            Content="{StaticResource ResourceKey=details_content}">
+              Margin="0,12,0,12"
+              Cursor="Hand"
+              Click="details_Click"
+              Content="{StaticResource ResourceKey=details_content}">
         <Button.Template>
           <ControlTemplate TargetType="Button">
             <TextBlock>

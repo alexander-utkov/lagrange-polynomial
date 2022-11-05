@@ -6,4 +6,29 @@
   <system:Double x:Key="window_min_width">550</system:Double>
   <system:Double x:Key="window_min_height">400</system:Double>
   <system:String x:Key="window_title">Интерполирование</system:String>
+
+  <!-- Названия шагов решения (ActionCollection) -->
+  <system:String x:Key="overview">Обзор метода</system:String>
+  <system:String x:Key="auxiliary">Вспомогательная функция</system:String>
+  <system:String x:Key="preparations">Предварительные вычисления</system:String>
+  <system:String x:Key="substitution">Подстановка значений</system:String>
+
+  <!-- Описания действий (Action.Description) -->
+  <system:String x:Key="formula.polynomial">Интерполяционная формула Лагранжа:</system:String>
+  <system:String x:Key="definition.n">Индекс N определяется количеством узлов интерполяции:</system:String>
+  <system:String x:Key="formula.auxiliary">Формула вспомогательной функции:</system:String>
+  <system:String x:Key="definition.auxiliary">Подставим абсциссы:</system:String>
+  <system:String x:Key="derivative.auxiliary">Найдем производную:</system:String>
+  <system:String x:Key="derivative.auxiliary.ordinates">Предварительно вычислим ординаты производной вспомогательной функции в узлах интерполяции.</system:String>
+  <system:String x:Key="formula.polynomial.substitution">Подставим значения в интерполяционную формулу:</system:String>
+
+  <!-- Содержание действий (Action.Content) -->
+  <!-- NOTE: Используйте символ '@' для обозначения места вставки. При этом экранировать скобки "{}" не нужно. -->
+  <system:String x:Key="formula.polynomial.content">P_n(x)\\approx\\sum_{i=0}^{n}{\\frac{y_i\\varphi(x)}{{\\varphi}'(x_i)(x-x_i)}}</system:String>
+  <system:String x:Key="definition.n.content">n=@-1=@</system:String>
+  <system:String x:Key="formula.auxiliary.content">\\varphi(x)=@</system:String>
+  <system:String x:Key="definition.auxiliary.content">\\varphi(x)=@</system:String>
+  <system:String x:Key="derivative.auxiliary.content">{\\varphi}'(x)=@</system:String>
+  <system:String x:Key="derivative.auxiliary.calculate.content">{\\varphi}'(x_@)={\\varphi}'(@)=@</system:String>
+  <system:String x:Key="formula.polynomial.substitution.content">P(x)=@=@</system:String>
 </ResourceDictionary>
