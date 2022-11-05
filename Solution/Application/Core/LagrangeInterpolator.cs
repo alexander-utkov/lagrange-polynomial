@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AngouriMath;
+using AngouriMath.Core;
 using AngouriMath.Extensions;
 
-namespace NumericalMethods
+namespace NumericalMethods.Core
 {
     /// <summary>
     /// Модель интерполяционного многочлена Лагранжа.
@@ -84,14 +86,20 @@ namespace NumericalMethods
 
             Solution = Solution + "P(x)=" + expression.Latexise() + "=" + polynom.Latexise();
             Polynom = polynom.ToString();
+            Plot = new PlotInfo(data_x.Min() - 1, data_x.Max() + 1);
+
+            m_polynom = polynom.Compile<double, double>("x"); // FIXME: А если переменной не будет в polynom?
         }
 
         public string Solution { get; private set; }
         public string Polynom { get; private set; }
+        public PlotInfo Plot { get; set; }
+
+        protected Func<double, double> m_polynom;
 
         public double GetValue(double x)
         {
-            throw new Exception("TODO"); // FastExpression (?)
+            return m_polynom(x);
         }
     }
 }

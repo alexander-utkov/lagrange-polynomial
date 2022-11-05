@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace NumericalMethods
+﻿namespace NumericalMethods.Core
 {
     /// <summary>Интерфейс интерполяции многочленами.</summary>
-    internal interface IInterpolator
+    public interface IInterpolator
     {
         /// <summary>
         /// Получает многочлен, который решает задачу интерполяции в заданных моделью условиях.
@@ -14,6 +12,11 @@ namespace NumericalMethods
         /// Получает последовательность действий для нахождения многочлена <see cref="Polynom"/> в формате LaTeX.
         /// </summary>
         string Solution { get; }
+
+        /// <summary>
+        /// Получает или задает информацию об графике <see cref="Polynom"/>.
+        /// </summary>
+        PlotInfo Plot { get; set; }
 
         /// <summary>Вычисляет значение многочлена.</summary>
         /// <param name="x">Аргумент <see cref="Polynom"/>.</param>

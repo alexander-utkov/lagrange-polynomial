@@ -9,7 +9,8 @@
       <ResourceDictionary.MergedDictionaries>
         <hc:ThemeResources/>
         <hc:Theme/>
-        <ResourceDictionary Source="StringResources.xaml" />
+        <ResourceDictionary Source="Assets/Styles.xaml" />
+        <ResourceDictionary Source="Assets/CommonDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
