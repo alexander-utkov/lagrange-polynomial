@@ -17,12 +17,12 @@ namespace NumericalMethods.Core
         Entity Polynomial { get; }
 
         /// <summary>
-        /// Возвращает ординату <see cref="Polynom"/> для входной абсциссы.
+        /// Возвращает ординату <see cref="Polynomial"/> для входной абсциссы.
         /// </summary>
         Func<double, double> Interpolate { get; }
 
         /// <summary>
-        /// Получает последовательность действий для нахождения многочлена <see cref="Polynom"/>.
+        /// Получает последовательность действий для нахождения многочлена <see cref="Polynomial"/>.
         /// </summary>
         IList<ActionCollection> Solution { get; }
     }

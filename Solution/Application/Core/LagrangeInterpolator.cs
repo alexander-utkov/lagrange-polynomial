@@ -10,8 +10,6 @@ namespace NumericalMethods.Core
 {
     /// <summary>
     /// Модель интерполяционного многочлена Лагранжа.
-    /// 
-    /// TODO: Вынести в проект ядра приложения и сделать проект модульного тестирования.
     /// </summary>
     public sealed class LagrangeInterpolator : IInterpolator
     {

@@ -5,8 +5,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
+// REVIEW, DOCS, TODO
+
 namespace NumericalMethods.Controls
 {
+    /// <summary>
+    /// Элемент управления для отображения множества именованных сочетаний (альтернатив) жестов.
+    /// </summary>
     public partial class Shortcuts : UserControl
     {
         public Shortcuts()
@@ -17,6 +22,10 @@ namespace NumericalMethods.Controls
             Commands.CollectionChanged += Commands_CollectionChanged;
         }
 
+        /// <summary>
+        /// Получает коллекцию команд, которые отображаются элементом управления. Сочетание именуется строковым ресурсом
+        /// по ключу <see cref="RoutedCommand.Name"/> или же им самим.
+        /// </summary>
         public ObservableCollection<RoutedCommand> Commands { get; }
 
         private void Commands_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -65,7 +74,7 @@ namespace NumericalMethods.Controls
             AddShortcut(command.Name, gestures);
         }
 
-        private IList<string> GetGestures(InputGestureCollection collection)
+        private IReadOnlyCollection<string> GetGestures(InputGestureCollection collection)
         {
             List<string> gestures = new List<string>();
             foreach (var gesture in collection)
@@ -88,10 +97,10 @@ namespace NumericalMethods.Controls
                     throw new System.NotImplementedException($"Command with not supported Gesture type '{unexpected}'.");
                 }
             }
-            return gestures;
+            return gestures.AsReadOnly();
         }
 
-        public void AddShortcut(string description_key, IList<string> gestures, string separator="+")
+        public void AddShortcut(string description_key, IReadOnlyCollection<string> gestures, string separator="+")
         {
             string description = description_key;
             if (Resources.Contains(description_key))

@@ -119,13 +119,12 @@ namespace NumericalMethods.Core
                 if (success == true)
                 {
                     X = result;
-                    m_x_source_raw_invalid = false;
                 }
                 else
                 {
                     m_x_source = X == double.NegativeInfinity ? "" : X.ToString("g", App.Culture);
-                    m_x_source_raw_invalid = true;
                 }
+                m_x_source_raw_invalid = !success;
                 ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("SourceX"));
             }
         }
@@ -147,13 +146,12 @@ namespace NumericalMethods.Core
                 if (success == true)
                 {
                     Y = result;
-                    m_y_source_raw_invalid = false;
                 }
                 else
                 {
                     m_y_source = Y == double.NegativeInfinity ? "" : Y.ToString("g", App.Culture);
-                    m_y_source_raw_invalid = true;
                 }
+                m_y_source_raw_invalid = !success;
                 ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("SourceY"));
             }
         }
@@ -179,7 +177,13 @@ namespace NumericalMethods.Core
         /// </summary>
         public bool IsDefined => IsDefinedX && IsDefinedY;
 
-        static protected bool ValidateValue(double value)
+        /// <summary>
+        /// Проверяет допустимость значения для <see cref="X"/> и <see cref="Y"/>. Если задать <paramref name="value"/>,
+        /// когда метод возвращает false, то соответствующее свойство будет считаться неопределенным.
+        /// </summary>
+        /// <param name="value">Проверяемое значение</param>
+        /// <returns>Возвращает true, если значение допустимо; иначе, false.</returns>
+        static public bool ValidateValue(double value)
         {
             return !(double.IsNaN(value) || double.IsPositiveInfinity(value) || double.IsNegativeInfinity(value));
         }
@@ -203,7 +207,6 @@ namespace NumericalMethods.Core
         /// <returns>Возвращает список ошибок.</returns>
         public IEnumerable GetErrors(string property)
         {
-            // TODO: Запомнить ошибки при определении m_x_source_raw_invalid и m_y_source_raw_invalid.
             List<string> errors = new List<string>();
             if ((property == null || property == "SourceX") && IsDefinedX == false)
             {
