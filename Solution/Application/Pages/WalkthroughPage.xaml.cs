@@ -3,6 +3,7 @@ using NumericalMethods.Core;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace NumericalMethods.Pages
 {
@@ -27,9 +28,28 @@ namespace NumericalMethods.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            Application.Current.MainWindow.KeyDown += Page_KeyDown;
+
             RenderCurrentStep();
         }
-        
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.KeyDown -= Page_KeyDown;
+        }
+
+        private void Page_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left || e.Key == Key.Back)
+            {
+                navigate_prev_Click(sender, null);
+            }
+            else if (e.Key == Key.Right || e.Key == Key.Space || e.Key == Key.Enter)
+            {
+                navigate_next_Click(sender, null);
+            }
+        }
+
         private void stepper_StepChanged(object sender, HandyControl.Data.FunctionEventArgs<int> e)
         {
             RenderCurrentStep();

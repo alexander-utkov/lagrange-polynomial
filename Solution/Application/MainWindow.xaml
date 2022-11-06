@@ -5,6 +5,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:hc="https://handyorg.github.io/handycontrol"
            xmlns:local="clr-namespace:NumericalMethods"
+           KeyDown="Window_KeyDown"
            mc:Ignorable="d"
            Width="{StaticResource ResourceKey=window_width}"
            Height="{StaticResource ResourceKey=window_height}"

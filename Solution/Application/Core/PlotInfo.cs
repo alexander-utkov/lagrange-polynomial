@@ -2,15 +2,25 @@
 {
     public class PlotInfo
     {
-        public PlotInfo(double from, double to, double step = double.NaN)
+        public PlotInfo(double a, double b, double step = double.NaN)
         {
-            From = from;
-            To = to;
-            Step = double.IsNaN(step) ? (to - from) / 100d : step;
+            A = a;
+            B = b;
+
+            if (A > B)
+            {
+                double c = A;
+                A = B;
+                B = c;
+            }
+
+            Step = double.IsNaN(step) ? (b - a) / 100d : step;
+
+            // FIXME: double.IsNegativeInfinity, double.IsPositiveInfinity.
         }
 
-        public readonly double From;
-        public readonly double To;
-        public readonly double Step;
+        public double A { get; }
+        public double B { get; }
+        public double Step { get; }
     }
 }

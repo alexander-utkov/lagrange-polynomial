@@ -7,6 +7,9 @@
   <system:Double x:Key="window_min_height">400</system:Double>
   <system:String x:Key="window_title">Интерполирование</system:String>
 
+  <!-- Локализация интерфейса -->
+  <system:String x:Key="back_content">назад</system:String>
+
   <!-- Названия шагов решения (ActionCollection) -->
   <system:String x:Key="overview">Обзор метода</system:String>
   <system:String x:Key="auxiliary">Вспомогательная функция</system:String>
@@ -31,4 +34,9 @@
   <system:String x:Key="derivative.auxiliary.content">{\varphi}'(x)=@</system:String>
   <system:String x:Key="derivative.auxiliary.calculate.content">{\varphi}'(x_@)={\varphi}'(@)=@</system:String>
   <system:String x:Key="formula.polynomial.substitution.content">P(x)=@=@</system:String>
+
+  <!-- Описание свойств -->
+  <system:String x:Key="fn.domain.a">начало области определения [a; b]</system:String>
+  <system:String x:Key="fn.domain.b">конец области определения [a; b]</system:String>
+  <system:String x:Key="plot.step">шаг между точками на оси абсцисс</system:String>
 </ResourceDictionary>

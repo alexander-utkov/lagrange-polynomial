@@ -5,10 +5,47 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:hc="https://handyorg.github.io/handycontrol"
       xmlns:local="clr-namespace:NumericalMethods.Pages"
+      Loaded="Page_Loaded"
       mc:Ignorable="d"
       d:DesignWidth="{StaticResource ResourceKey=window_width}"
       d:DesignHeight="{StaticResource ResourceKey=window_height}">
   <Page.Resources>
     <ResourceDictionary Source="../Assets/PlotPageDictionary.xaml" />
   </Page.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="12px"/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition Height="12px"/>
+      <RowDefinition Height="32px"/>
+    </Grid.RowDefinitions>
+    <WpfPlot x:Name="plot"
+             Grid.Column="0"
+             Grid.Row="0"/>
+    <StackPanel Grid.Column="2"
+                Grid.Row="0">
+      <hc:PropertyGrid x:Name="props"/>
+      
+    </StackPanel>
+    <Button x:Name="replot"
+            Grid.Column="2"
+            Grid.Row="2"
+            Height="32px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Click="replot_Click"
+            Content="{StaticResource ResourceKey=replot_content}"/>
+    <Button x:Name="back"
+            Grid.Column="0"
+            Grid.Row="2"
+            Height="32px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Click="back_Click"
+            Content="{StaticResource ResourceKey=back_content}"/>
+  </Grid>
 </Page>

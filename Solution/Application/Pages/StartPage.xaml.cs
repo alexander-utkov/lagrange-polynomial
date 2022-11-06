@@ -24,7 +24,10 @@ namespace NumericalMethods.Pages
 
         private void Page_KeyDown(object sender, KeyEventArgs e)
         {
-            start_Click(sender, null);
+            if (e.Key == Key.Space || e.Key == Key.Enter)
+            {
+                start_Click(sender, null);
+            }
         }
 
         private void start_Click(object sender, RoutedEventArgs e)

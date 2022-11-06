@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace NumericalMethods.Core
 {
@@ -191,7 +192,7 @@ namespace NumericalMethods.Core
         /// <summary>
         /// Проверяет допустимость строкового представления значения для <see cref="SourceX"/> и <see cref="SourceY"/>.
         /// </summary>
-        /// <param name="value">Проверяемое значение</param>
+        /// <param name="value">Проверяемое значение.</param>
         /// <returns>Возвращает true, если значение допустимо; иначе, false.</returns>
         static public bool ValidateValue(string value)
         {

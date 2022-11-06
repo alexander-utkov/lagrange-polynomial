@@ -1,7 +1,9 @@
 ﻿using NumericalMethods.Core;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace NumericalMethods.Pages
 {
@@ -22,11 +24,29 @@ namespace NumericalMethods.Pages
         private IInterpolator m_interpolator;
         private PlotInfo m_plot_info;
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.KeyDown += Page_KeyDown;
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.KeyDown -= Page_KeyDown;
+        }
+
+        private void Page_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space || e.Key == Key.Enter)
+            {
+                details_Click(sender, null);
+            }
+        }
+
         private void FigurePlot()
         {
             List<double> data_x = new List<double>();
             List<double> data_y = new List<double>();
-            for (double x = m_plot_info.From; x < m_plot_info.To; x += m_plot_info.Step)
+            for (double x = m_plot_info.A; x < m_plot_info.B; x += m_plot_info.Step)
             {
                 data_x.Add(x);
                 data_y.Add(m_interpolator.Interpolate(x));
@@ -35,18 +55,19 @@ namespace NumericalMethods.Pages
             plot.Refresh();
         }
 
-        private void details_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void details_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new WalkthroughPage(m_interpolator));
         }
 
-        private void back_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
         }
 
-        private void define_plot_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void define_plot_Click(object sender, RoutedEventArgs e)
         {
+            NavigationService.Navigate(new PlotPage(m_interpolator));
         }
     }
 }
