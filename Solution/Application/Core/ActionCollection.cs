@@ -21,6 +21,6 @@ namespace NumericalMethods.Core
         /// <summary>
         /// Наименование списка.
         /// </summary>
-        public readonly string Name;
+        public string Name { get; }
     }
 }

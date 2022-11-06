@@ -119,6 +119,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Assets\PlotPageDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Assets\ShortcutsDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Assets\WalkthroughPageDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ActionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -150,6 +158,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\ActionsView.xaml.cs">
+      <DependentUpon>ActionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Shortcut.xaml.cs">
       <DependentUpon>Shortcut.xaml</DependentUpon>
@@ -174,6 +185,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\PlotPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\SolutionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -190,6 +205,9 @@
   <ItemGroup>
     <Compile Include="Pages\DefinitionPage.xaml.cs">
       <DependentUpon>DefinitionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PlotPage.xaml.cs">
+      <DependentUpon>PlotPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SolutionPage.xaml.cs">
       <DependentUpon>SolutionPage.xaml</DependentUpon>

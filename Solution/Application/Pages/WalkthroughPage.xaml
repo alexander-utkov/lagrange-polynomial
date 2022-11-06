@@ -6,29 +6,83 @@
       xmlns:hc="https://handyorg.github.io/handycontrol"
       xmlns:local="clr-namespace:NumericalMethods.Pages"
       xmlns:latex="clr-namespace:WpfMath.Controls;assembly=WpfMath"
+      Loaded="Page_Loaded"
       mc:Ignorable="d" 
       d:DesignWidth="{StaticResource ResourceKey=window_width}"
       d:DesignHeight="{StaticResource ResourceKey=window_height}">
   <Page.Resources>
     <ResourceDictionary Source="../Assets/WalkthroughPageDictionary.xaml" />
   </Page.Resources>
-  <Grid>
+  <Grid x:Name="grid">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="32"/>
-      <ColumnDefinition Width="12"/>
+      <ColumnDefinition Width="6"/>
       <ColumnDefinition/>
       <ColumnDefinition Width="12"/>
       <ColumnDefinition/>
-      <ColumnDefinition Width="12"/>
+      <ColumnDefinition Width="6"/>
       <ColumnDefinition Width="32"/>
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
-      <RowDefinition Height="32"/>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="12"/>
       <RowDefinition/>
       <RowDefinition Height="12"/>
       <RowDefinition Height="32"/>
     </Grid.RowDefinitions>
-    <!-- panel with stack panel -->
+    <hc:StepBar x:Name="stepper"
+                Grid.Column="0"
+                Grid.ColumnSpan="7"
+                Grid.Row="0"
+                Dock="Top"
+                StepChanged="stepper_StepChanged">
+      <hc:StepBar.ItemTemplate>
+        <DataTemplate>
+          <TextBlock HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     FontWeight="SemiBold"
+                     FontSize="12"
+                     Text="{Binding Name, Mode=OneTime}"/>
+        </DataTemplate>
+      </hc:StepBar.ItemTemplate>
+    </hc:StepBar>
+    <ContentControl x:Name="step"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="7"
+                    Grid.Row="2"/>
+    <Button x:Name="navigate_first"
+            Grid.Column="0"
+            Grid.Row="4"
+            Width="32px"
+            Height="32px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Click="navigate_first_Click"
+            Content="{StaticResource ResourceKey=navigate_first_content}"/>
+    <Button x:Name="navigate_prev"
+            Grid.Column="2"
+            Grid.Row="4"
+            Height="32px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Click="navigate_prev_Click"
+            Content="{StaticResource ResourceKey=navigate_prev_content}"/>
+    <Button x:Name="navigate_next"
+            Grid.Column="4"
+            Grid.Row="4"
+            Height="32px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Click="navigate_next_Click"
+            Content="{StaticResource ResourceKey=navigate_next_content}"/>
+    <Button x:Name="navigate_last"
+            Grid.Column="6"
+            Grid.Row="4"
+            Width="32px"
+            Height="32px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Click="navigate_last_Click"
+            Content="{StaticResource ResourceKey=navigate_last_content}"/>
   </Grid>
 </Page>
