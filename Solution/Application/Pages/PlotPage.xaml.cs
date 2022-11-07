@@ -4,6 +4,7 @@ using NumericalMethods.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -18,6 +19,12 @@ namespace NumericalMethods.Pages
             InitializeComponent();
 
             m_interpolator = interpolator;
+
+            plot.Plot.Style(
+                figureBackground: Color.Transparent,
+                dataBackground: Color.Transparent,
+                grid: Color.DarkGray
+            );
         }
 
         private IInterpolator m_interpolator;
@@ -27,9 +34,6 @@ namespace NumericalMethods.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             InitializePropertiesModel(new PlotInfo(m_interpolator.DataX.Min() - 1, m_interpolator.DataX.Max() + 1));
-
-            props.SelectedObject = m_properties_model;
-
             RefreshPlot();
         }
 
@@ -61,7 +65,7 @@ namespace NumericalMethods.Pages
                         typeof(PropertyEditorBase)
                     })
                 });
- 
+
                 // Запоминмаем значение по умолчанию данного свойства
                 values[name] = typeof(PlotInfo).GetProperty(defaults_name).GetValue(defaults);
             };
@@ -86,6 +90,8 @@ namespace NumericalMethods.Pages
             {
                 property.SetValue(m_properties_model, values[property.Name]);
             }
+
+            props.SelectedObject = m_properties_model;
         }
 
         private void back_Click(object sender, System.Windows.RoutedEventArgs e)

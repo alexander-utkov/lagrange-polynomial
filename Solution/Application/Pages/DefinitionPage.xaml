@@ -28,8 +28,8 @@
     <Border Grid.Column="0"
             Grid.Row="0"
             Grid.RowSpan="3"
-            CornerRadius="12"
-            Background="#E6E6E6">
+            CornerRadius="{StaticResource SubstantiveCornerRadius}"
+            Background="{StaticResource ElevationBackground}">
       <DataGrid x:Name="definition"
                 ItemsSource="{Binding}"
                 Background="#00ffffff"

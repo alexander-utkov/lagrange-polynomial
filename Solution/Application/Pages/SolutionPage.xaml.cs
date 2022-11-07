@@ -1,5 +1,6 @@
 ﻿using NumericalMethods.Core;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,11 @@ namespace NumericalMethods.Pages
 
             polynomial.Formula = "P(x)=" + interpolator.Polynomial.Latexise();
 
-            FigurePlot();
+            plot.Plot.Style(
+                figureBackground: Color.Transparent,
+                dataBackground: Color.Transparent,
+                grid: Color.DarkGray
+            );
         }
 
         private IInterpolator m_interpolator;
@@ -27,6 +32,8 @@ namespace NumericalMethods.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.KeyDown += Page_KeyDown;
+
+            FigurePlot();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)

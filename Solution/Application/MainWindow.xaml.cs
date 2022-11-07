@@ -1,7 +1,4 @@
 ﻿using System.Windows.Input;
-using System.Windows;
-using NumericalMethods.Pages;
-using System.Windows.Navigation;
 
 namespace NumericalMethods
 {

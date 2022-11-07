@@ -7,8 +7,10 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <hc:ThemeResources/>
+        <hc:ThemeResources RequestedTheme="Light"
+                           AccentColor="Red"/>
         <hc:Theme/>
+        
         <ResourceDictionary Source="Assets/Styles.xaml" />
         <ResourceDictionary Source="Assets/CommonDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
