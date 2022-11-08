@@ -17,6 +17,11 @@ namespace NumericalMethods.Pages
             definition.ItemsSource = Points;
         }
 
+        public static string[] RequiredLocalizedResourceDictionaries = new string[]
+        {
+            "CommandDictionary.xaml",
+        };
+
         public ObservableCollection<Core.Point> Points { get; set; }
 
         public static RoutedCommand EditContinueCommand = new RoutedCommand(

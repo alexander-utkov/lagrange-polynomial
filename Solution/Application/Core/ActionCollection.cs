@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 
 namespace NumericalMethods.Core
 {
@@ -14,13 +15,14 @@ namespace NumericalMethods.Core
         /// <param name="key">Наименование списка или его ключ в ресурсах.</param>
         public ActionCollection(string key)
         {
-            object name = Application.Current.TryFindResource(key);
-            Name = name == null ? key : name as string;
+            m_key = key;
         }
+
+        protected string m_key;
 
         /// <summary>
         /// Наименование списка.
         /// </summary>
-        public string Name { get; }
+        public string Name => Application.Current.TryFindResource(m_key) as string;
     }
 }

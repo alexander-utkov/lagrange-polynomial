@@ -7,4 +7,10 @@
   <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
     <Setter Property="FontSize" Value="14" />
   </Style>
+
+  <Color x:Key="Elevation">#E6E6E6</Color>
+
+  <SolidColorBrush x:Key="ElevationBackground" Color="{StaticResource Elevation}"/>
+
+  <CornerRadius x:Key="SubstantiveCornerRadius">12</CornerRadius>
 </ResourceDictionary>

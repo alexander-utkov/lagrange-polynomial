@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Antlr4.Runtime.Misc;
+using System.Windows;
+using System.Windows.Input;
 
 namespace NumericalMethods.Core
 {
@@ -14,26 +16,27 @@ namespace NumericalMethods.Core
         /// <param name="args">Аргументы форматирования для <see cref="GetContent(string, object[])"/>.</param>
         public Action(string key, params object[] args)
         {
-            object description = Application.Current.TryFindResource(key);
-            Description = description == null ? null : description as string;
-
-            Content = GetContent(key + ContentKeySuffix, args);
+            m_key = key;
+            m_args = args;
         }
 
         /// <summary>
         /// Описание действия в текстовом формате. Может быть null.
         /// </summary>
-        public readonly string Description;
+        public string Description => Application.Current.TryFindResource(m_key) as string;
 
         /// <summary>
         /// Содержание действия в формате LaTeX. Может быть null.
         /// </summary>
-        public readonly string Content;
+        public string Content => GetContent(m_key + m_content_key_suffix, m_args);
 
         /// <summary>
         /// Представляет собой дополнение к ключу описания для формирования ключа содержания (шаблона).
         /// </summary>
-        protected static string ContentKeySuffix = ".content";
+        protected static string m_content_key_suffix = ".content";
+
+        protected string m_key;
+        protected object[] m_args;
 
         /// <summary>
         /// Получает содержание действия.
@@ -42,10 +45,12 @@ namespace NumericalMethods.Core
         /// Содержание формируется в зависимости от наличия в ресурсах шаблона <paramref name="key"/>. Если ресурса нет,
         /// то содержание есть объединение <paramref name="args"/> через символ новой линии; иначе, содержанием является
         /// результат форматирования (<see cref="string.Format(string, object[])"/>) данного ресурса, причем аргументами
-        /// форматирования являются <paramref name="args"/>.
+        /// форматирования являются <paramref name="args"/>, однако, если первый элемент <see cref="args"/> является
+        /// вложенным <see cref="Action"/>, то все элементы <see cref="Args>"/> считаются такового типа; в таком случае
+        /// содержанием будет объединение свойств <see cref="Content"/> данных аргументов через символ новой линии.
         /// </remarks>
         /// <param name="key">Ключ содержания (шаблона). Может быть null.</param>
-        /// <param name="args">Аргументы форматирования.</param>
+        /// <param name="args">Аргументы форматирования или вложенные <see cref="Action"/>.</param>
         /// <returns>
         /// Содержание действия в формате LaTeX. Может быть null, если ни определен ресурс <paramref name="key"/>, ни
         /// определены аргументы (строки) <paramref name="args"/>.
@@ -86,6 +91,19 @@ namespace NumericalMethods.Core
             }
             else if (args.Length != 0)
             {
+                if (args[0].GetType() == typeof(Action))
+                {
+                    string result = "";
+                    for (int index = 0; index < args.Length; index++)
+                    {
+                        if (index != 0)
+                        {
+                            result += "\\\\";
+                        }
+                        result += (args[index] as Action).Content;
+                    }
+                    return result;
+                }
                 return string.Join("\\\\", args);
             }
             return null;

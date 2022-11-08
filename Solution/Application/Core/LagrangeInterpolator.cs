@@ -64,6 +64,8 @@ namespace NumericalMethods.Core
         /// </summary>
         private int N => DataX.Count - 1;
 
+        private static App App => App.Current as App;
+
         private void OverviewAction()
         {
             ActionCollection overview = new ActionCollection("overview");
@@ -99,7 +101,7 @@ namespace NumericalMethods.Core
         {
             List<double> data_aux_der = new List<double>();
             Func<double, double> aux_der_compiled = aux_der.Compile<double, double>("x");
-            List<string> expressions = new List<string>();
+            List<Action> expressions = new List<Action>();
 
             for (int index = 0; index <= N; index++)
             {
@@ -110,9 +112,11 @@ namespace NumericalMethods.Core
                 var str_index = index.ToString();
                 var str_x = x.ToString(App.Culture);
                 var str_y = y.ToString(App.Culture);
-                var expression = Action.GetContent("derivative.auxiliary.calculate.content", str_index, str_x, str_y);
+                var expression = new Action("derivative.auxiliary.calculate", str_index, str_x, str_y);
                 expressions.Add(expression);
             }
+
+            // TODO: Сделать expression не строками, а вложенными action'ами.
 
             ActionCollection preparations = new ActionCollection("preparations");
             preparations.Add(new Action("derivative.auxiliary.ordinates", expressions.ToArray()));

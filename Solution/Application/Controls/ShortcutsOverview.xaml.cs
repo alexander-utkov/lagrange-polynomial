@@ -102,11 +102,8 @@ namespace NumericalMethods.Controls
 
         public void AddShortcut(string description_key, IReadOnlyCollection<string> gestures, string separator="+")
         {
-            string description = description_key;
-            if (Resources.Contains(description_key))
-            {
-                description = (string)Resources[description_key];
-            }
+            object description_res = Application.Current.TryFindResource(description_key);
+            string description = description_res == null ? description_key : description_res as string;
 
             // Добавляем в конец новую строку
             var definition = new RowDefinition()

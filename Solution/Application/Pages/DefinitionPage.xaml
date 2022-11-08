@@ -1,19 +1,16 @@
-<Page x:Class="NumericalMethods.Pages.DefinitionPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:hc="https://handyorg.github.io/handycontrol"
-      xmlns:local="clr-namespace:NumericalMethods.Pages"
-      xmlns:controls="clr-namespace:NumericalMethods.Controls"
-      Loaded="Page_Loaded"
-      Unloaded="Page_Unloaded"
-      mc:Ignorable="d"
-      d:DesignWidth="{StaticResource ResourceKey=window_width}"
-      d:DesignHeight="{StaticResource ResourceKey=window_height}">
-  <Page.Resources>
-    <ResourceDictionary Source="../Assets/DefinitionPageDictionary.xaml" />
-  </Page.Resources>
+<local:Page x:Class="NumericalMethods.Pages.DefinitionPage"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:hc="https://handyorg.github.io/handycontrol"
+            xmlns:local="clr-namespace:NumericalMethods.Pages"
+            xmlns:controls="clr-namespace:NumericalMethods.Controls"
+            Loaded="Page_Loaded"
+            Unloaded="Page_Unloaded"
+            mc:Ignorable="d"
+            d:DesignWidth="{StaticResource ResourceKey=window_width}"
+            d:DesignHeight="{StaticResource ResourceKey=window_height}">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
@@ -69,6 +66,6 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Click="interpolate_Click"
-            Content="{StaticResource ResourceKey=interpolate_content}"/>
+            Content="{DynamicResource interpolate_content}"/>
   </Grid>
-</Page>
+</local:Page>

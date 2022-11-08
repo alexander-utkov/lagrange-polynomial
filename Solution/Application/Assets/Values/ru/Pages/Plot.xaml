@@ -1,0 +1,17 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+  <system:String x:Key="back_content">назад</system:String>
+  <system:String x:Key="replot_content">перестроить</system:String>
+
+  <system:String x:Key="category.plot.interpolant">Интерполирующая функция</system:String>
+  <system:String x:Key="category.plot.source">Исходная функция</system:String>
+
+  <system:String x:Key="function.domain.start">начало области определения [a;b]</system:String>
+  <system:String x:Key="function.domain.end">конец области определения [a;b]</system:String>
+  <system:String x:Key="plot.step">шаг между точками на оси абсцисс</system:String>
+
+  <system:String x:Key="function.domain.start.name">a</system:String>
+  <system:String x:Key="function.domain.end.name">b</system:String>
+  <system:String x:Key="plot.step.name">Шаг</system:String>
+</ResourceDictionary>

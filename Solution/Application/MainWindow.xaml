@@ -7,11 +7,11 @@
            xmlns:local="clr-namespace:NumericalMethods"
            KeyDown="Window_KeyDown"
            mc:Ignorable="d"
-           Width="{StaticResource ResourceKey=window_width}"
-           Height="{StaticResource ResourceKey=window_height}"
-           MinWidth="{StaticResource ResourceKey=window_min_width}"
-           MinHeight="{StaticResource ResourceKey=window_min_height}"
-           Title="{StaticResource ResourceKey=window_title}">
+           Width="{StaticResource window_width}"
+           Height="{StaticResource window_height}"
+           MinWidth="{StaticResource window_min_width}"
+           MinHeight="{StaticResource window_min_height}"
+           Title="{DynamicResource window_title}">
   <Frame x:Name="page"
          Margin="12"
          Source="Pages/StartPage.xaml"

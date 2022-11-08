@@ -23,6 +23,11 @@ namespace NumericalMethods.Pages
             }
         }
 
+        public static string[] RequiredLocalizedResourceDictionaries = new string[]
+        {
+            "ActionDictionary.xaml",
+        };
+
         private IInterpolator m_interpolator;
         private List<ActionsView> m_content_controls;
 

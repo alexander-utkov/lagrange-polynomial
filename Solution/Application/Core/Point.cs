@@ -67,6 +67,8 @@ namespace NumericalMethods.Core
         protected bool m_x_source_raw_invalid = false;
         protected bool m_y_source_raw_invalid = false;
 
+        private static App App => App.Current as App;
+
         /// <summary>
         /// Получает или задает значение на оси абсцисс.
         /// </summary>

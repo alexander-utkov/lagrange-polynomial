@@ -1,0 +1,11 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+  <system:String x:Key="definition.edit.continue">type value</system:String>
+  <system:String x:Key="definition.edit.function">type function</system:String>
+  <system:String x:Key="definition.edit.cell">edit value</system:String>
+  <system:String x:Key="definition.edit.remove.row">remove row</system:String>
+  <system:String x:Key="definition.interpolate">interpolate</system:String>
+  <system:String x:Key="definition.navigation.up">navigation up</system:String>
+  <system:String x:Key="definition.navigation.down">navigation down</system:String>
+</ResourceDictionary>

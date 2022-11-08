@@ -50,10 +50,11 @@ namespace NumericalMethods.Pages
             TypeExtender extender = new TypeExtender("PropertiesModel", typeof(System.Object));
             Dictionary<string, object> values = new Dictionary<string, object>();
 
-            Action<string, string, string, string, string, Type> add_property = (string category, string name,
-                string display_name, string defaults_name, string description_key, Type editor) =>
+            Action<string, string, string, string, Type> add_property = (string category, string name,
+                string defaults_name, string key, Type editor) =>
             {
-                string description = Application.Current.FindResource(description_key) as string;
+                string display_name = Application.Current.TryFindResource(key + ".name") as string;
+                string description = Application.Current.TryFindResource(key) as string;
                 extender.AddProperty(name, typeof(double), new List<Tuple<Type, object[]>>()
                 {
                     new Tuple<Type, object[]>(typeof(CategoryAttribute), new object[] { category }),
@@ -70,16 +71,16 @@ namespace NumericalMethods.Pages
                 values[name] = typeof(PlotInfo).GetProperty(defaults_name).GetValue(defaults);
             };
 
-            string interpolant_plot = "Интерполирующая функция";
-            add_property(interpolant_plot, "InterpolantA", "a", "A", "fn.domain.a", typeof(DomainPropertyEditor));
-            add_property(interpolant_plot, "InterpolantB", "b", "B", "fn.domain.b", typeof(DomainPropertyEditor));
-            add_property(interpolant_plot, "InterpolantStep", "Шаг", "Step", "plot.step", typeof(StepPropertyEditor));
+            string interpolant_plot = Application.Current.TryFindResource("category.plot.interpolant") as string;
+            add_property(interpolant_plot, "InterpolantA", "A", "function.domain.start", typeof(DomainPropertyEditor));
+            add_property(interpolant_plot, "InterpolantB", "B", "function.domain.end", typeof(DomainPropertyEditor));
+            add_property(interpolant_plot, "InterpolantStep", "Step", "plot.step", typeof(StepPropertyEditor));
 
             /*
-            string source_plot = "Исходная функция";
-            add_property(source_plot, "SourceA", "a", "fn.domain.a", typeof(DomainPropertyEditor));
-            add_property(source_plot, "SourceB", "b", "fn.domain.b", typeof(DomainPropertyEditor));
-            add_property(source_plot, "SourceStep", "Шаг", "plot.step", typeof(StepPropertyEditor));
+            string source_plot = Application.Current.TryFindResource("category.plot.source") as string;
+            add_property(source_plot, "SourceA", "A", "function.domain.start", typeof(DomainPropertyEditor));
+            add_property(source_plot, "SourceB", "B", "function.domain.end", typeof(DomainPropertyEditor));
+            add_property(source_plot, "SourceStep", "Step" "plot.step", typeof(StepPropertyEditor));
             */
 
             m_properties_model_type = extender.FetchType();

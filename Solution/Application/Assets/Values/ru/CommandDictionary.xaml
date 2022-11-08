@@ -1,7 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
-  <!-- Описание команд, выполняемых сочитанием жестов -->
   <system:String x:Key="definition.edit.continue">ввод значений</system:String>
   <system:String x:Key="definition.edit.function">ввод функции</system:String>
   <system:String x:Key="definition.edit.cell">изменить значение</system:String>

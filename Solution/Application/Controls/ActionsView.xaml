@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NumericalMethods.Controls"
              mc:Ignorable="d" 
-             d:DesignWidth="{StaticResource ResourceKey=window_width}"
-             d:DesignHeight="{StaticResource ResourceKey=window_height}">
+             d:DesignWidth="{StaticResource window_width}"
+             d:DesignHeight="{StaticResource window_height}">
   <ScrollViewer>
     <StackPanel x:Name="panel"
                 HorizontalAlignment="Stretch"

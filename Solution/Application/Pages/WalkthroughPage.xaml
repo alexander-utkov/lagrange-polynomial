@@ -1,19 +1,16 @@
-<Page x:Class="NumericalMethods.Pages.WalkthroughPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:hc="https://handyorg.github.io/handycontrol"
-      xmlns:local="clr-namespace:NumericalMethods.Pages"
-      xmlns:latex="clr-namespace:WpfMath.Controls;assembly=WpfMath"
-      Loaded="Page_Loaded"
-      Unloaded="Page_Unloaded"
-      mc:Ignorable="d" 
-      d:DesignWidth="{StaticResource ResourceKey=window_width}"
-      d:DesignHeight="{StaticResource ResourceKey=window_height}">
-  <Page.Resources>
-    <ResourceDictionary Source="../Assets/WalkthroughPageDictionary.xaml" />
-  </Page.Resources>
+<local:Page x:Class="NumericalMethods.Pages.WalkthroughPage"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:hc="https://handyorg.github.io/handycontrol"
+            xmlns:local="clr-namespace:NumericalMethods.Pages"
+            xmlns:latex="clr-namespace:WpfMath.Controls;assembly=WpfMath"
+            Loaded="Page_Loaded"
+            Unloaded="Page_Unloaded"
+            mc:Ignorable="d" 
+            d:DesignWidth="{StaticResource window_width}"
+            d:DesignHeight="{StaticResource window_height}">
   <Grid x:Name="grid">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="32"/>
@@ -59,7 +56,7 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Click="navigate_first_Click"
-            Content="{StaticResource ResourceKey=navigate_first_content}"/>
+            Content="{DynamicResource navigate_first_content}"/>
     <Button x:Name="navigate_prev"
             Grid.Column="2"
             Grid.Row="4"
@@ -67,7 +64,7 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Click="navigate_prev_Click"
-            Content="{StaticResource ResourceKey=navigate_prev_content}"/>
+            Content="{DynamicResource navigate_prev_content}"/>
     <Button x:Name="navigate_next"
             Grid.Column="4"
             Grid.Row="4"
@@ -75,7 +72,7 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Click="navigate_next_Click"
-            Content="{StaticResource ResourceKey=navigate_next_content}"/>
+            Content="{DynamicResource navigate_next_content}"/>
     <Button x:Name="navigate_last"
             Grid.Column="6"
             Grid.Row="4"
@@ -84,6 +81,6 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Click="navigate_last_Click"
-            Content="{StaticResource ResourceKey=navigate_last_content}"/>
+            Content="{DynamicResource navigate_last_content}"/>
   </Grid>
-</Page>
+</local:Page>

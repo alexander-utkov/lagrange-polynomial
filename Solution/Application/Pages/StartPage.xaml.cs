@@ -10,6 +10,8 @@ namespace NumericalMethods.Pages
         public StartPage()
         {
             InitializeComponent();
+
+            lang.SelectedValue = App.Preferences.Language;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -33,6 +35,13 @@ namespace NumericalMethods.Pages
         private void start_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new DefinitionPage());
+        }
+
+        private void lang_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var element = e.AddedItems[0] as ComboBoxItem;
+            App.Preferences.Language = element.Content as string;
+            App.Preferences.CommitChanges();
         }
     }
 }
