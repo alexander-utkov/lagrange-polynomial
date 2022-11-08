@@ -2,5 +2,6 @@
                     xmlns:hc="https://handyorg.github.io/handycontrol">
   <ResourceDictionary.MergedDictionaries>
     <hc:IntellisenseResources Source="/HandyControl;Component/DesignTime/DesignTimeResources.xaml" />
+    <ResourceDictionary Source="/NumericalMethods;Component/Assets/Values/" />
   </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

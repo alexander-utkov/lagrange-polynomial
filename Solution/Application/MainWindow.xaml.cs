@@ -15,15 +15,12 @@ namespace NumericalMethods
             App.Preferences.PropertyChanged += Preferences_PropertyChanged;
         }
 
-        protected App App => App.Current as App;
+        private App App => App.Current as App;
 
         private void InitializeResources()
         {
             Resources = new ResourceDictionary();
             Resources.MergedDictionaries.Add(App.GetResourceDictionary("WindowDictionary.xaml"));
-
-            // FIXME: LagrangeInterpolator рано запрашивает ресурс, словарь которого еще не загружен, и запоминает null.
-            Resources.MergedDictionaries.Add(App.GetResourceDictionary("ActionDictionary.xaml"));
         }
 
         private void Preferences_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -3,6 +3,9 @@ using System.Windows;
 
 namespace NumericalMethods
 {
+    /// <summary>
+    /// Редактор шага между точками для построения функции при элементе управления <see cref="PropertyGrid"/>.
+    /// </summary>
     public class StepPropertyEditor : PropertyEditorBase
     {
         public StepPropertyEditor()

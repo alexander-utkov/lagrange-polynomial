@@ -7,14 +7,19 @@ using System.Xml.Serialization;
 
 namespace NumericalMethods.Core
 {
+    /// <summary>
+    /// Предпочтения пользователя.
+    /// </summary>
+    /// <remarks>
+    /// Средство доступа к данным об предпочтениях пользователя, сохраняемых на устройстве. Представляет собой одиночку.
+    /// Экземпляр доступен через свойство <see cref="Instance"/>.
+    /// </remarks>
     [DataContract]
     public sealed class Preferences : INotifyPropertyChanged
     {
         private Preferences()
         {
-            Language = "ru";
-
-            m_has_changes = true;
+            PropertyChanged += Preferences_PropertyChanged;
         }
 
         public static Preferences Instance
@@ -23,30 +28,60 @@ namespace NumericalMethods.Core
             {
                 if (m_preferences == null)
                 {
-                    m_preferences = File.Exists(m_file_path) ? LoadPreferences() : new Preferences();
+                    if (File.Exists(m_file_path) == true)
+                    {
+                        m_preferences =  LoadPreferences();
+                    }
+                    else
+                    {
+                        m_preferences = new Preferences()
+                        {
+                            m_has_changes = true
+                        };
+                    }
                 }
                 return m_preferences;
             }
         }
 
+        /// <summary>
+        /// Событие, вызываемое при изменении значения любого свойства.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Получает или задает язык пользовательского интерфейса.
+        /// </summary>
+        /// <remarks>
+        /// Допустимые значения ограничены собственной локализацией приложения и локализацией HandyControls.
+        /// </remarks>
         [DataMember]
         public string Language
         {
             get => m_language;
             set
             {
-                m_language = value;
+                if (value == "en" || value == "ru") m_language = value;
+                else m_language = "en";
+
                 PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(Language)));
             }
         }
 
-        private string m_language;
-        private bool m_has_changes;
-        private static Preferences m_preferences;
+        private string m_language = "ru";
+        private bool m_has_changes = false;
+        private static Preferences m_preferences = null;
         private static string m_file_path = "Preferences.xml";
 
+        private void Preferences_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            m_has_changes = true;
+        }
+
+        /// <summary>
+        /// Создает экземпляр из файла.
+        /// </summary>
+        /// <returns>Возвращает созданный экземпляр.</returns>
         private static Preferences LoadPreferences()
         {
             lock (m_file_path)
@@ -68,23 +103,21 @@ namespace NumericalMethods.Core
             }
         }
 
-        public bool CommitChanges()
+        /// <summary>
+        /// Фиксирует изменения экземпляра в файле.
+        /// </summary>
+        public void CommitChanges()
         {
-            if (m_preferences == null)
-            {
-                return false;
-            }
-
             lock (m_file_path)
             {
-                if (m_preferences.m_has_changes == true)
+                if (m_has_changes == true)
                 {
                     TextWriter writer = null;
                     try
                     {
                         var serializer = new XmlSerializer(typeof(Preferences));
                         writer = new StreamWriter(m_file_path, false);
-                        serializer.Serialize(writer, m_preferences);
+                        serializer.Serialize(writer, this);
                     }
                     finally
                     {
@@ -94,9 +127,8 @@ namespace NumericalMethods.Core
                         }
                     }
                 }
-                m_preferences.m_has_changes = false;
+                m_has_changes = false;
             }
-            return true;
         }
     }
 }

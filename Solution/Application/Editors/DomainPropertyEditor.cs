@@ -3,6 +3,9 @@ using System.Windows;
 
 namespace NumericalMethods
 {
+    /// <summary>
+    /// Редактор начала или конца области определения функции при элементе управления <see cref="PropertyGrid"/>.
+    /// </summary>
     public class DomainPropertyEditor : PropertyEditorBase
     {
         public DomainPropertyEditor()

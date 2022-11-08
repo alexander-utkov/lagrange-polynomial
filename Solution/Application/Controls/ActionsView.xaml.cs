@@ -5,16 +5,25 @@ using WpfMath.Controls;
 
 namespace NumericalMethods.Controls
 {
+    /// <summary>
+    /// Элемент управления для отображения <see cref="Action"/> или <see cref="ActionCollection"/>.
+    /// </summary>
     public partial class ActionsView : UserControl
     {
+        /// <summary>
+        /// Создает экземпляр с единственным действием <see cref="Action"/>.
+        /// </summary>
+        /// <param name="action">Отображаемое действие.</param>
         public ActionsView(Action action)
         {
             InitializeComponent();
             AddActionToLayout(action);
         }
 
-        private static Thickness m_margin = new Thickness(0, 0, 0, 12);
-
+        /// <summary>
+        /// Создает экземпляр со множеством действий <see cref="Action"/>.
+        /// </summary>
+        /// <param name="actions">Коллекция отображаемых действий.</param>
         public ActionsView(ActionCollection actions)
         {
             InitializeComponent();
@@ -24,6 +33,12 @@ namespace NumericalMethods.Controls
             }
         }
 
+        private static Thickness m_margin = new Thickness(0, 0, 0, 12);
+
+        /// <summary>
+        /// Добавляет действие на макет.
+        /// </summary>
+        /// <param name="action">Добавляемое действие</param>
         private void AddActionToLayout(Action action)
         {
             if (string.IsNullOrEmpty(action.Description) == false)
