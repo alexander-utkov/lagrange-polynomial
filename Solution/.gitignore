@@ -4,6 +4,10 @@
 # Артефакты сборки
 bin/
 obj/
+publish/
+
+# Ключи подписи сборки
+*.pfx
 
 # Пакеты NuGet
 Packages

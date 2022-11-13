@@ -4,4 +4,6 @@
   <system:String x:Key="header_content">Задача</system:String>
   <system:String x:Key="task_content">Определить интерполяционный многочлен Лагранжа для функции, заданной далее таблицей, и построить ее график.</system:String>
   <system:String x:Key="start_content">определить функцию</system:String>
+
+  <system:String x:Key="navigation">Space: вперед; ESC: назад.</system:String>
 </ResourceDictionary>

@@ -2,4 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
   <system:String x:Key="interpolate_content">интерполировать</system:String>
+
+  <system:String x:Key="definition.input.repeat">Абсцисса не может повторяться.</system:String>
+  <system:String x:Key="definition.input.invalid">Значение недействительно.</system:String>
+  <system:String x:Key="definition.excluded">Недействительная точка ({0}; {1}) исключена.</system:String>
+  <system:String x:Key="definition.empty">Задайте не менее одной точки.</system:String>
+  <system:String x:Key="definition.function.erased">Исходная функция стерта.</system:String>
 </ResourceDictionary>

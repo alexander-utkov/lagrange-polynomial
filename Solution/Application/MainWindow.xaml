@@ -12,9 +12,17 @@
            MinWidth="{StaticResource window_min_width}"
            MinHeight="{StaticResource window_min_height}"
            Title="{DynamicResource window_title}">
-  <Frame x:Name="page"
-         Margin="12"
-         Source="Pages/StartPage.xaml"
-         NavigationUIVisibility="Hidden"
-         BorderThickness="0"/>
+  <hc:SimplePanel Margin="12">
+    <Frame x:Name="page"
+           Source="Pages/StartPage.xaml"
+           NavigationUIVisibility="Hidden"
+           BorderThickness="0"
+           Panel.ZIndex="0"/>
+    <hc:ScrollViewer VerticalScrollBarVisibility="Hidden"
+                  HorizontalAlignment="Right"
+                  Panel.ZIndex="0">
+      <StackPanel hc:Growl.GrowlParent="True"
+                  VerticalAlignment="Top"/>
+    </hc:ScrollViewer>
+  </hc:SimplePanel>
 </hc:Window>

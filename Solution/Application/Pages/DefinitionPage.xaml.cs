@@ -1,5 +1,6 @@
 ﻿using AngouriMath;
 using AngouriMath.Extensions;
+using HandyControl.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -89,12 +90,6 @@ namespace NumericalMethods.Pages
             // Выводим стандартные команды пользователю
 
             List<string> gestures;
-
-            gestures = new List<string>() { "Shift", "Enter" };
-            shortcuts.AddShortcut("definition.navigation.up", gestures);
-
-            gestures = new List<string>() { "Enter" };
-            shortcuts.AddShortcut("definition.navigation.down", gestures);
 
             gestures = new List<string>() { "ЛКМ", "F2" };
             shortcuts.AddShortcut("definition.edit.cell", gestures, "/");
@@ -213,9 +208,16 @@ namespace NumericalMethods.Pages
                     if (column == 1 && m_function_compiled != null)
                     {
                         InvalidateFunction();
+                        Growl.Info(FindResource("definition.function.erased") as string);
                     }
 
-                    var element = e.EditingElement as TextBox;
+                    var element = e.EditingElement as System.Windows.Controls.TextBox;
+                    if (string.IsNullOrEmpty(element.Text))
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+
                     var validation = Core.Point.TryParseValue(element.Text);
                     var is_valid = validation.Item1;
                     var value = validation.Item2;
@@ -223,7 +225,7 @@ namespace NumericalMethods.Pages
                     if (is_valid == false)
                     {
                         e.Cancel = true;
-                        // TODO: Уведомить пользователя о недействительности значения.
+                        Growl.Warning(FindResource("definition.input.invalid") as string);
                         return;
                     }
 
@@ -235,7 +237,7 @@ namespace NumericalMethods.Pages
                             if (point.IsDefinedX == true && point.X == value)
                             {
                                 e.Cancel = true;
-                                // TODO: Уведомить пользователя.
+                                Growl.Warning(FindResource("definition.input.repeat") as string);
                                 return;
                             }
                         }
@@ -340,14 +342,15 @@ namespace NumericalMethods.Pages
             List<double> data_y = new List<double>();
             foreach (Core.Point point in Points)
             {
-                if (point.IsDefined == true)
+                if (point.IsDefined == true && data_x.Contains(point.X) == false)
                 {
                     data_x.Add(point.X);
                     data_y.Add(point.Y);
                 }
-                else
+                else if (point.IsDefinedX || point.IsDefinedY)
                 {
-                    // TODO: Уведомить пользователя об исключении точки.
+                    var template = FindResource("definition.excluded") as string;
+                    Growl.Warning(string.Format(template, point.X, point.Y));
                 }
             }
             if (data_x.Count > 0)
@@ -357,7 +360,7 @@ namespace NumericalMethods.Pages
             }
             else
             {
-                // TODO: Уведомить пользователя об необходимости ввода точек...
+                Growl.Error(FindResource("definition.empty") as string);
             }
         }
 
@@ -369,7 +372,6 @@ namespace NumericalMethods.Pages
                 m_function_entity = null;
                 function.Text = "";
             }
-            // TODO: Уведомить пользователя.
         }
 
         private void function_LostFocus(object sender, RoutedEventArgs e)
