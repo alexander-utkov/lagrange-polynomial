@@ -6,4 +6,7 @@
   <system:String x:Key="details_content">solution</system:String>
 
   <system:String x:Key="plot.fit">Zoom to fit data</system:String>
+
+  <system:String x:Key="formula.copy.normal">Copy</system:String>
+  <system:String x:Key="formula.copy.latex">Copy as LaTeX</system:String>
 </ResourceDictionary>

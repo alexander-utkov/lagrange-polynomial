@@ -6,4 +6,7 @@
   <system:String x:Key="details_content">решение</system:String>
 
   <system:String x:Key="plot.fit">Сбросить масштабирование</system:String>
+
+  <system:String x:Key="formula.copy.normal">Копировать</system:String>
+  <system:String x:Key="formula.copy.latex">Копировать в виде LaTeX</system:String>
 </ResourceDictionary>

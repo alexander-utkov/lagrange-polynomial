@@ -80,5 +80,15 @@ namespace NumericalMethods.Pages
         {
             NavigationService.Navigate(new PlotPage(m_interpolator), m_function);
         }
+
+        private void FormulaCopyNormal_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(m_interpolator.Polynomial.ToString());
+        }
+
+        private void FormulaCopyLatex_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(m_interpolator.Polynomial.Latexise());
+        }
     }
 }
