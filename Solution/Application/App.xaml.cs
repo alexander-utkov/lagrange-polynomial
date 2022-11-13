@@ -3,7 +3,9 @@ using NumericalMethods.Core;
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace NumericalMethods
 {
@@ -42,6 +44,8 @@ namespace NumericalMethods
             {
                 Culture = new CultureInfo("ru");
             }
+            Thread.CurrentThread.CurrentCulture = Culture;
+            Thread.CurrentThread.CurrentUICulture = Culture;
         }
 
         /// <summary>
