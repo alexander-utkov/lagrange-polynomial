@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using HandyControl.Controls;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
@@ -29,6 +30,10 @@ namespace NumericalMethods.Pages
             if (e.Key == Key.Space || e.Key == Key.Enter)
             {
                 start_Click(sender, null);
+            }
+            else if (e.Key == Key.F1)
+            {
+                Growl.Info(FindResource("navigation") as string);
             }
         }
 

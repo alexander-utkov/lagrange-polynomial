@@ -64,7 +64,7 @@ namespace NumericalMethods.Controls
         }
 
         public static readonly DependencyProperty SeparatorProperty = DependencyProperty.Register(
-            "Separator", typeof(string), typeof(Shortcut), new PropertyMetadata("+")
+            nameof(Separator), typeof(string), typeof(Shortcut), new PropertyMetadata("+")
         );
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace NumericalMethods.Controls
         }
 
         public static readonly DependencyProperty GestureProperty = DependencyProperty.Register(
-            "Gesture", typeof(string), typeof(Shortcut), new PropertyMetadata("")
+            nameof(Gesture), typeof(string), typeof(Shortcut), new PropertyMetadata("")
         );
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace NumericalMethods.Controls
         }
 
         public static readonly DependencyProperty GesturesProperty = DependencyProperty.Register(
-            "Gestures", typeof(IReadOnlyCollection<string>), typeof(Shortcut)
+            nameof(Gestures), typeof(IReadOnlyCollection<string>), typeof(Shortcut)
         );
 
         /// <summary>

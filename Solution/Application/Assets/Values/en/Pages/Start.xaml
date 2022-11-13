@@ -4,4 +4,6 @@
   <system:String x:Key="header_content">Exercise</system:String>
   <system:String x:Key="task_content">Determine the Lagrange interpolation polynomial for the function given by the following table and plot its graph.</system:String>
   <system:String x:Key="start_content">setup function</system:String>
+
+  <system:String x:Key="navigation">Space: forward; ESC: back.</system:String>
 </ResourceDictionary>

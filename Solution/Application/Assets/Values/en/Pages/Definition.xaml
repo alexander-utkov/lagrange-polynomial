@@ -2,4 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
   <system:String x:Key="interpolate_content">interpolate</system:String>
+
+  <system:String x:Key="definition.input.repeat">Abscissa cannot be repeated.</system:String>
+  <system:String x:Key="definition.input.invalid">Value is invalid.</system:String>
+  <system:String x:Key="definition.excluded">Invalid point ({0}; {1}) excluded.</system:String>
+  <system:String x:Key="definition.empty">Type at least one point.</system:String>
+  <system:String x:Key="definition.function.erased">Source function erased.</system:String>
 </ResourceDictionary>

@@ -204,7 +204,12 @@ namespace NumericalMethods.Core
             return TryParseValue(value).Item1;
         }
 
-        // DOCS
+        /// <summary>
+        /// Проверяет допустимость строкового представления значения для <see cref="SourceX"/> и <see cref="SourceY"/> с
+        /// возможностью получения значения как <see cref="Double"/>.
+        /// </summary>
+        /// <param name="value">Проверяемое значение.</param>
+        /// <returns>Возвращает true, если значение допустимо, и само значение; иначе, false и -inf.</returns>
         static public Tuple<bool, double> TryParseValue(string value)
         {
             var result = double.NegativeInfinity;
