@@ -16,4 +16,6 @@
   <system:String x:Key="plot.step.name">Step</system:String>
   
   <system:String x:Key="legend.node">Node</system:String>
+
+  <system:String x:Key="plot.fit">Zoom to fit data</system:String>
 </ResourceDictionary>

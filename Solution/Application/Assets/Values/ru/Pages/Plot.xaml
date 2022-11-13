@@ -16,4 +16,6 @@
   <system:String x:Key="plot.step.name">Шаг</system:String>
 
   <system:String x:Key="legend.node">Узел</system:String>
+
+  <system:String x:Key="plot.fit">Сбросить масштабирование</system:String>
 </ResourceDictionary>

@@ -37,6 +37,7 @@ namespace NumericalMethods.Pages
                 dataBackground: Color.Transparent,
                 grid: Color.DarkGray
             );
+            PlotHelper.OverrideContextMenu(plot);
         }
 
         private IInterpolator m_interpolator;

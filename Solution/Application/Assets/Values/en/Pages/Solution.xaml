@@ -4,4 +4,6 @@
   <system:String x:Key="back_content">back</system:String>
   <system:String x:Key="define_plot_content">Build plot</system:String>
   <system:String x:Key="details_content">solution</system:String>
+
+  <system:String x:Key="plot.fit">Zoom to fit data</system:String>
 </ResourceDictionary>
