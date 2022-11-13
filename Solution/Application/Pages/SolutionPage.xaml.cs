@@ -78,7 +78,7 @@ namespace NumericalMethods.Pages
 
         private void define_plot_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new PlotPage(m_interpolator), m_function);
+            NavigationService.Navigate(new PlotPage(m_interpolator, m_function));
         }
 
         private void FormulaCopyNormal_Click(object sender, RoutedEventArgs e)
