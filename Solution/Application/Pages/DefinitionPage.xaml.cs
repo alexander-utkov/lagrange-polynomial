@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using AngouriMath;
+using AngouriMath.Extensions;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,13 +33,11 @@ namespace NumericalMethods.Pages
             new InputGestureCollection() { new KeyGesture(Key.Space) }
         );
 
-        /*
         public static RoutedCommand EditFunctionCommand = new RoutedCommand(
             "definition.edit.function",
             typeof(DefinitionPage),
             new InputGestureCollection() { new KeyGesture(Key.Space, ModifierKeys.Shift) }
         );
-        */
 
         public static RoutedCommand InterpolateCommand = new RoutedCommand(
             "definition.interpolate",
@@ -60,10 +61,28 @@ namespace NumericalMethods.Pages
         /// </summary>
         private List<InputBinding> m_input_bindings = new List<InputBinding>();
 
+        /// <summary>
+        /// Исходная функция f(x). Может быть null.
+        /// </summary>
+        private Entity m_function_entity = null;
+
+        /// <summary>
+        /// Скомпилированная исходная функция f(x) для выполнения вычислений. Может быть null.
+        /// </summary>
+        private Func<double, double> m_function_compiled = null;
+
+        /// <summary>
+        /// Объект для синхронизации доступа к <see cref="m_function_compiled"/>. Не может быть null.
+        /// </summary>
+        /// <remarks>
+        /// Значение не имеет значения. Объект используется в выражении lock.
+        /// </remarks>
+        private object m_function_lock = 'z';
+
         private void InitializeShortcuts()
         {
             shortcuts.Commands.Add(EditContinueCommand);
-            //shortcuts.Commands.Add(EditFunctionCommand);
+            shortcuts.Commands.Add(EditFunctionCommand);
             shortcuts.Commands.Add(InterpolateCommand);
             shortcuts.Commands.Add(RowRemoveCommand);
 
@@ -92,7 +111,7 @@ namespace NumericalMethods.Pages
         private void InitializeCommands()
         {
             InitializeCommand(EditContinueCommand, EditContinue);
-            //InitializeCommand(EditFunctionCommand, EditFunction);
+            InitializeCommand(EditFunctionCommand, EditFunction);
             InitializeCommand(InterpolateCommand, Interpolate);
             InitializeCommand(RowRemoveCommand, RowRemove);
         }
@@ -148,20 +167,13 @@ namespace NumericalMethods.Pages
         /// </summary>
         private void EditContinue(object sender, ExecutedRoutedEventArgs e)
         {
-            foreach (var point in Points)
-            {
-                if (point.IsDefinedX == false)
-                {
-                    definition.CurrentCell = new DataGridCellInfo(point, definition.Columns[0]);
-                }
-                else if (point.IsDefinedY == false)
-                {
-                    definition.CurrentCell = new DataGridCellInfo(point, definition.Columns[1]);
-                }
-                else continue;
+            EditNextPoint(false);
+            definition.BeginEdit();
+        }
 
-                definition.BeginEdit();
-            }
+        private void EditFunction(object sender, ExecutedRoutedEventArgs e)
+        {
+            function.Focus();
         }
 
         private void Interpolate(object sender, ExecutedRoutedEventArgs e)
@@ -173,10 +185,10 @@ namespace NumericalMethods.Pages
         {
             var point = definition.CurrentItem as Core.Point;
             var index = Points.IndexOf(point);
-            var column = definition.CurrentCell.Column;
-            
+            var column = definition.CurrentColumn;
+
             Points.Remove(point);
-            
+
             // Задаем фокусировку на иной элемент
             if (Points.Count == 0)
             {
@@ -197,31 +209,129 @@ namespace NumericalMethods.Pages
             {
                 if (e.Column == definition.CurrentColumn) // Обрабатываем событие только для измененной ячейки
                 {
-                    // Проверяем новое значение
+                    var column = definition.Columns.IndexOf(e.Column);
+                    if (column == 1 && m_function_compiled != null)
+                    {
+                        InvalidateFunction();
+                    }
+
                     var element = e.EditingElement as TextBox;
-                    bool is_valid = Core.Point.ValidateValue(element.Text);
+                    var validation = Core.Point.TryParseValue(element.Text);
+                    var is_valid = validation.Item1;
+                    var value = validation.Item2;
+
                     if (is_valid == false)
                     {
                         e.Cancel = true;
-                        definition.BeginEdit();
+                        // TODO: Уведомить пользователя о недействительности значения.
                         return;
                     }
 
-                    // Производим навигацию до следующей ячейки (строки)
-                    if (definition.CurrentColumn == definition.Columns[0])
+                    // Избегаем повторения абсцисс
+                    if (column == 0)
                     {
-                        // TODO: К следующей незаполненной.
-                        var point = definition.CurrentItem;
-                        definition.CurrentCell = new DataGridCellInfo(point, definition.Columns[1]);
+                        foreach (Core.Point point in Points)
+                        {
+                            if (point.IsDefinedX == true && point.X == value)
+                            {
+                                e.Cancel = true;
+                                // TODO: Уведомить пользователя.
+                                return;
+                            }
+                        }
                     }
-                    else
+
+                    var preview_cell_value = new PreviewCellValue()
                     {
-                        var point = new Core.Point();
-                        Points.Add(point);
-                        definition.CurrentCell = new DataGridCellInfo(point, definition.Columns[0]);
-                    }
+                        Point = e.Row.Item as Core.Point,
+                        Column = column,
+                        Value = value
+                    };
+                    EditNextPoint(true, preview_cell_value);
                 }
             }
+        }
+
+        /// <summary>
+        /// Переходит на следующую ячейку на данной строке или ниже.
+        /// </summary>
+        /// <remarks>
+        /// Заполненные ячейки пропускаются, а переход по ним производится слева направо и сверху вниз. Если определена
+        /// исходная функция, то переход на ординаты не происходит. Вместо этого вызывается функция для их вычисления.
+        /// </remarks>
+        /// <param name="is_continue">Если true, то проверка начнется с текущей точки; иначе, с первой.</param>
+        /// <param name="preview_cell_value">Предварительный просмотр значения ячейки при событиях изменения.</param>
+        private void EditNextPoint(bool is_continue = true, PreviewCellValue? preview_cell_value = null)
+        {
+            if (definition.CurrentItem == null)
+            {
+                definition.CurrentItem = Points[0];
+            }
+
+            lock (m_function_lock)
+            {
+                var start_index = definition.Items.IndexOf(definition.CurrentItem);
+                for (int index = start_index; index < definition.Items.Count; index++)
+                {
+                    var point = definition.Items[index] as Core.Point;
+
+                    var has_preview = preview_cell_value.HasValue ? preview_cell_value.Value.Point == point : false;
+                    var has_abscissa = point.IsDefinedX || (has_preview && preview_cell_value.Value.Column == 0);
+                    var has_ordinate = point.IsDefinedY || (has_preview && preview_cell_value.Value.Column == 1);
+
+                    if (has_abscissa == false)
+                    {
+                        BeginEditCell(point, 0);
+                    }
+                    else if (has_ordinate == false)
+                    {
+                        if (m_function_compiled == null)
+                        {
+                            BeginEditCell(point, 1);
+                        }
+                        else
+                        {
+                            double value = point.X;
+                            if (has_preview && preview_cell_value.Value.Column == 0)
+                            {
+                                value = preview_cell_value.Value.Value;
+                            }
+
+                            bool success = TryEvalOrdinate(point, value);
+                            if (success == false)
+                            {
+                                BeginEditCell(point, 1);
+                            }
+                            else break;
+                        }
+                    }
+                    else continue;
+                    return;
+                }
+            }
+
+            var new_point = new Core.Point();
+            Points.Add(new_point);
+            BeginEditCell(new_point, 0);
+        }
+
+        private void BeginEditCell(Core.Point point, int column)
+        {
+            definition.CurrentCell = new DataGridCellInfo(point, definition.Columns[column]);
+        }
+
+        private bool TryEvalOrdinate(Core.Point point, double x)
+        {
+            lock (m_function_lock)
+            {
+                if (m_function_compiled == null)
+                {
+                    return false;
+                }
+
+                point.Y = m_function_compiled(x);
+            }
+            return true;
         }
 
         private void interpolate_Click(object sender, RoutedEventArgs e)
@@ -243,11 +353,60 @@ namespace NumericalMethods.Pages
             if (data_x.Count > 0)
             {
                 var interpolator = new Core.LagrangeInterpolator(data_x, data_y);
-                NavigationService.Navigate(new SolutionPage(interpolator));
+                NavigationService.Navigate(new SolutionPage(interpolator, m_function_entity));
             }
             else
             {
                 // TODO: Уведомить пользователя об необходимости ввода точек...
+            }
+        }
+
+        private void InvalidateFunction()
+        {
+            lock (m_function_lock)
+            {
+                m_function_compiled = null;
+                m_function_entity = null;
+                function.Text = "";
+            }
+            // TODO: Уведомить пользователя.
+        }
+
+        private void function_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                lock (m_function_lock)
+                {
+                    m_function_entity = function.Text.ToEntity();
+                    m_function_compiled = m_function_entity.Compile<double, double>("x");
+                }
+                ReEvalOrdinates();
+            }
+            catch
+            {
+                InvalidateFunction();
+            }
+        }
+
+        private void ReEvalOrdinates()
+        {
+            foreach (Core.Point point in definition.Items)
+            {
+                if (point.IsDefinedX)
+                {
+                    TryEvalOrdinate(point, point.X);
+                }
+            }
+        }
+
+        private void function_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                definition.Focus();
+                EditNextPoint(false);
+                definition.BeginEdit();
             }
         }
     }

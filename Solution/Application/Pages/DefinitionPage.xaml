@@ -24,7 +24,6 @@
     </Grid.RowDefinitions>
     <Border Grid.Column="0"
             Grid.Row="0"
-            Grid.RowSpan="3"
             CornerRadius="{StaticResource SubstantiveCornerRadius}"
             Background="{StaticResource ElevationBackground}">
       <DataGrid x:Name="definition"
@@ -39,20 +38,21 @@
         <DataGrid.Columns>
           <DataGridTextColumn Header="x"
                               Width="*"
-                              Binding="{Binding SourceX}"/>
+                              Binding="{Binding SourceX, Mode=TwoWay}"/>
           <DataGridTextColumn Header="f(x)"
                               Width="*"
-                              Binding="{Binding SourceY}"/>
+                              Binding="{Binding SourceY, Mode=TwoWay}"/>
         </DataGrid.Columns>
       </DataGrid>
     </Border>
-    <!--
-    <TextBox x:Name="function"
-             Grid.Column="0"
-             Grid.Row="3"
-             HorizontalAlignment="Stretch"
-             VerticalAlignment="Stretch"/>
-    -->
+    <hc:TextBox x:Name="function"
+                Grid.Column="0"
+                Grid.Row="3"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                hc:InfoElement.Placeholder="f(x)"
+                LostFocus="function_LostFocus"
+                PreviewKeyDown="function_PreviewKeyDown"/>
     <StackPanel Grid.Column="2"
                 Grid.Row="0"
                 HorizontalAlignment="Stretch"

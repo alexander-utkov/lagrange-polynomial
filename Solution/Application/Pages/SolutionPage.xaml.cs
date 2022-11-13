@@ -1,20 +1,22 @@
-﻿using NumericalMethods.Core;
+﻿using AngouriMath;
+using NumericalMethods.Core;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NumericalMethods.Pages
 {
     public partial class SolutionPage : Page
     {
-        public SolutionPage(Core.IInterpolator interpolator)
+        public SolutionPage(Core.IInterpolator interpolator, Entity function = null)
         {
             InitializeComponent();
 
             m_interpolator = interpolator;
+            m_function = function;
+
             m_plot_info = new PlotInfo(m_interpolator.DataX.Min() - 1, m_interpolator.DataX.Max() + 1);
 
             polynomial.Formula = "P(x)=" + interpolator.Polynomial.Latexise();
@@ -27,6 +29,7 @@ namespace NumericalMethods.Pages
         }
 
         private IInterpolator m_interpolator;
+        private Entity m_function;
         private PlotInfo m_plot_info;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -58,13 +61,13 @@ namespace NumericalMethods.Pages
                 data_x.Add(x);
                 data_y.Add(m_interpolator.Interpolate(x));
             }
-            plot.Plot.AddScatter(data_x.ToArray(), data_y.ToArray());
+            plot.Plot.AddScatter(data_x.ToArray(), data_y.ToArray(), color: Color.Magenta);
             plot.Refresh();
         }
 
         private void details_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new WalkthroughPage(m_interpolator));
+            NavigationService.Navigate(new WalkthroughPage(m_interpolator, m_function));
         }
 
         private void back_Click(object sender, RoutedEventArgs e)
@@ -74,7 +77,7 @@ namespace NumericalMethods.Pages
 
         private void define_plot_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new PlotPage(m_interpolator));
+            NavigationService.Navigate(new PlotPage(m_interpolator), m_function);
         }
     }
 }

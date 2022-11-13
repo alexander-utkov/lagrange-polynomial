@@ -14,4 +14,6 @@
   <system:String x:Key="function.domain.start.name">a</system:String>
   <system:String x:Key="function.domain.end.name">b</system:String>
   <system:String x:Key="plot.step.name">Step</system:String>
+  
+  <system:String x:Key="legend.node">Node</system:String>
 </ResourceDictionary>

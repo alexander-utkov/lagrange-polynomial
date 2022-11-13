@@ -1,19 +1,23 @@
-﻿using NumericalMethods.Controls;
+﻿using AngouriMath;
+using NumericalMethods.Controls;
 using NumericalMethods.Core;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static AngouriMath.Entity;
 
 namespace NumericalMethods.Pages
 {
     public partial class WalkthroughPage : Page
     {
-        public WalkthroughPage(IInterpolator interpolator)
+        public WalkthroughPage(IInterpolator interpolator, Entity function = null)
         {
             InitializeComponent();
 
             m_interpolator = interpolator;
+            m_function = function;
+
             stepper.ItemsSource = m_interpolator.Solution;
 
             m_content_controls = new List<ActionsView>();
@@ -29,6 +33,7 @@ namespace NumericalMethods.Pages
         };
 
         private IInterpolator m_interpolator;
+        private Entity m_function;
         private List<ActionsView> m_content_controls;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -90,7 +95,7 @@ namespace NumericalMethods.Pages
             }
             else
             {
-                NavigationService.Navigate(new PlotPage(m_interpolator));
+                NavigationService.Navigate(new PlotPage(m_interpolator, m_function));
             }
         }
 

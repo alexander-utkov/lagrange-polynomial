@@ -1,4 +1,5 @@
-﻿using Extender;
+﻿using AngouriMath;
+using Extender;
 using HandyControl.Controls;
 using NumericalMethods.Core;
 using System;
@@ -8,17 +9,28 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace NumericalMethods.Pages
 {
     public partial class PlotPage : Page
     {
-        public PlotPage(IInterpolator interpolator)
+        public PlotPage(IInterpolator interpolator, Entity function = null)
         {
             InitializeComponent();
 
             m_interpolator = interpolator;
+            m_function = function;
+
+            if (m_function != null)
+            {
+                try
+                {
+                    m_function_compiled = m_function.Compile<double, double>("x");
+                }
+                catch
+                { }
+            }
 
             plot.Plot.Style(
                 figureBackground: Color.Transparent,
@@ -28,8 +40,14 @@ namespace NumericalMethods.Pages
         }
 
         private IInterpolator m_interpolator;
+        private Entity m_function;
         private Type m_properties_model_type;
         private object m_properties_model;
+
+        /// <summary>
+        /// Скомпилированная исходная функция f(x) для выполнения вычислений. Может быть null.
+        /// </summary>
+        private Func<double, double> m_function_compiled = null;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -76,12 +94,13 @@ namespace NumericalMethods.Pages
             add_property(interpolant_plot, "InterpolantB", "B", "function.domain.end", typeof(DomainPropertyEditor));
             add_property(interpolant_plot, "InterpolantStep", "Step", "plot.step", typeof(StepPropertyEditor));
 
-            /*
-            string source_plot = Application.Current.TryFindResource("category.plot.source") as string;
-            add_property(source_plot, "SourceA", "A", "function.domain.start", typeof(DomainPropertyEditor));
-            add_property(source_plot, "SourceB", "B", "function.domain.end", typeof(DomainPropertyEditor));
-            add_property(source_plot, "SourceStep", "Step" "plot.step", typeof(StepPropertyEditor));
-            */
+            if (m_function_compiled != null)
+            {
+                string source_plot = Application.Current.TryFindResource("category.plot.source") as string;
+                add_property(source_plot, "SourceA", "A", "function.domain.start", typeof(DomainPropertyEditor));
+                add_property(source_plot, "SourceB", "B", "function.domain.end", typeof(DomainPropertyEditor));
+                add_property(source_plot, "SourceStep", "Step", "plot.step", typeof(StepPropertyEditor));
+            }
 
             m_properties_model_type = extender.FetchType();
             m_properties_model = Activator.CreateInstance(m_properties_model_type);
@@ -95,7 +114,7 @@ namespace NumericalMethods.Pages
             props.SelectedObject = m_properties_model;
         }
 
-        private void back_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
         }
@@ -109,12 +128,28 @@ namespace NumericalMethods.Pages
         {
             plot.Plot.Clear();
 
-            BuildPlot("Interpolant", m_interpolator.Interpolate);
+            if (m_function_compiled == null)
+            {
+                plot.Plot.AddScatter(
+                    m_interpolator.DataX.ToArray(),
+                    m_interpolator.DataY.ToArray(),
+                    lineWidth: 0,
+                    markerSize: 10,
+                    color: Color.Cyan,
+                    label: FindResource("legend.node") as string
+                );
+            }
+            else
+            {
+                BuildPlot("Source", m_function_compiled, Color.Orange, "f(x)");
+            }
+            BuildPlot("Interpolant", m_interpolator.Interpolate, Color.Magenta, "P(x)");
 
+            plot.Plot.Legend(enable: true);
             plot.Refresh();
         }
 
-        private void BuildPlot(string basename, Func<double, double> func)
+        private void BuildPlot(string basename, Func<double, double> func, Color color, string label)
         {
             var a = GetValue<double>(basename + "A");
             var b = GetValue<double>(basename + "B");
@@ -134,7 +169,7 @@ namespace NumericalMethods.Pages
                 data_x.Add(x);
                 data_y.Add(func(x));
             }
-            plot.Plot.AddScatter(data_x.ToArray(), data_y.ToArray());
+            plot.Plot.AddScatter(data_x.ToArray(), data_y.ToArray(), color: color, label: label);
         }
 
         private T GetValue<T>(string property)

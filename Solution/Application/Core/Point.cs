@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text.RegularExpressions;
+
+// FIXME: Синхронизация X, Y и SourceX, SourceY соответственно, а также создание события PropertyChanged в setter'ах.
 
 namespace NumericalMethods.Core
 {
@@ -84,6 +85,7 @@ namespace NumericalMethods.Core
                 m_x = value;
                 m_x_source = value == double.NegativeInfinity ? "" : value.ToString("g", App.Culture);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(X)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SourceX)));
             }
         }
 
@@ -102,6 +104,7 @@ namespace NumericalMethods.Core
                 m_y = value;
                 m_y_source = value == double.NegativeInfinity ? "" : value.ToString("g", App.Culture);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Y)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SourceY)));
             }
         }
 
@@ -198,9 +201,15 @@ namespace NumericalMethods.Core
         /// <returns>Возвращает true, если значение допустимо; иначе, false.</returns>
         static public bool ValidateValue(string value)
         {
+            return TryParseValue(value).Item1;
+        }
+
+        // DOCS
+        static public Tuple<bool, double> TryParseValue(string value)
+        {
             var result = double.NegativeInfinity;
             bool success = double.TryParse(value, NumberStyles.Any, App.Culture, out result);
-            return success && ValidateValue(result);
+            return new Tuple<bool, double>(success && ValidateValue(result), result);
         }
 
         /// <summary>
