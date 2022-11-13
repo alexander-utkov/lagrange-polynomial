@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime.Misc;
 using System.Windows;
-using System.Windows.Input;
+
+// TODO: Рефакторинг.
 
 namespace NumericalMethods.Core
 {
