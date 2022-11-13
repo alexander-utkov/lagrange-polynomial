@@ -2,15 +2,16 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:local="clr-namespace:NumericalMethods.Controls"
              mc:Ignorable="d" 
              d:DesignWidth="{StaticResource window_width}"
              d:DesignHeight="{StaticResource window_height}">
-  <ScrollViewer>
+  <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
     <StackPanel x:Name="panel"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 Orientation="Vertical"/>
-  </ScrollViewer>
+  </hc:ScrollViewer>
 </UserControl>

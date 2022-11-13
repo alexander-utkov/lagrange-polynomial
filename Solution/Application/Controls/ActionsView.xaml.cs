@@ -1,4 +1,5 @@
-﻿using NumericalMethods.Core;
+﻿using HandyControl.Controls;
+using NumericalMethods.Core;
 using System.Windows;
 using System.Windows.Controls;
 using WpfMath.Controls;
@@ -53,10 +54,14 @@ namespace NumericalMethods.Controls
 
             if (string.IsNullOrEmpty(action.Content) == false)
             {
-                UIElement content = new FormulaControl()
+                UIElement content = new HandyControl.Controls.ScrollViewer()
                 {
                     Margin = m_margin,
-                    Formula = action.Content
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Visible,
+                    Content = new FormulaControl()
+                    {
+                        Formula = action.Content
+                    }
                 };
                 panel.Children.Add(content);
             }

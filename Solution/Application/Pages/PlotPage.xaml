@@ -28,10 +28,12 @@
     </Border>
     <StackPanel Grid.Column="2"
                 Grid.Row="0">
-      <hc:PropertyGrid x:Name="props"
-                       Padding="0"
-                       Background="Transparent"/>
-      
+      <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+        <hc:PropertyGrid x:Name="props"
+                         Padding="0"
+                         Background="Transparent"/>
+      </hc:ScrollViewer>
+
     </StackPanel>
     <Button x:Name="replot"
             Grid.Column="2"
